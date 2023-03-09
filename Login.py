@@ -35,14 +35,16 @@ class TestLogin(unittest.TestCase):
         self.assertIn(DataTest.laptop, click_laptop.get_attribute("innerText"))
         click_laptop.click()
 
+        cart_qty = driver.find_element(By.XPATH, LocatorPath.qty)
+        cart_qty.clear()
+        cart_qty.send_keys(3)
+        # print("Jumlah Barang : "+str(cart_qty.get_attribute("textContent")))
+
         add_to_cart = driver.find_element(By.CSS_SELECTOR, LocatorPath.add_laptop_to_cart)
         self.assertIn(DataTest.add_to_cart, add_to_cart.get_attribute("defaultValue"))
         add_to_cart.click()
         # WebDriverWait(driver,10).until(EC.presence_of_element_located((add_to_cart.click())))
 
-        # cart_qty = WebDriverWait(driver, 15).until(
-        #     EC.presence_of_element_located((By.XPATH, LocatorPath.cart_qty)))
-        # print("Jumlah Barang : "+str(cart_qty.get_attribute("textContent")))
         shopping_cart = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, LocatorPath.shopping_cart)))
         self.assertIn(DataTest.shopping, shopping_cart.get_attribute("innerText"))
         shopping_cart.click()
