@@ -34,7 +34,7 @@ class TestRegister(unittest.TestCase):
         self.assertEqual(driver.current_url, str(DataTest.base_url+"/registerresult/1"))
         driver.find_element(By.XPATH, LocatorPath.continue_button).click()
         driver.find_element(By.XPATH, LocatorPath.logout_link).click()
-        print(DataTest.email)
+        print("Berhasil register : "+DataTest.email)
 
     def test_register_is_empty(self):
         driver = self.browser
