@@ -65,6 +65,20 @@ class TestLogin(unittest.TestCase):
 
         self.assertEqual(driver.current_url, DataTest.base_url + '/onepagecheckout')
 
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_FirstName']").send_keys(DataTest.firstname)
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_LastName']").send_keys(DataTest.lastname)
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_Email']").send_keys(DataTest.email)
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_Company']").send_keys("Moladin")
+        select = Select(driver.find_element(By.XPATH, "//select[@id='BillingNewAddress_CountryId']"))
+        select.select_by_visible_text('Indonesia')
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_City']").send_keys("Jakarta")
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_Address1']").send_keys("Cilandak")
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_Address2']").send_keys("Kedoya")
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_ZipPostalCode']").send_keys("13125")
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_PhoneNumber']").send_keys("811555698755")
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_FaxNumber']").send_keys("0218989776655")
+        
+
     def test_failed_login(self):
         driver = self.browser
         driver.get(str(DataTest.base_url+"/login"))
