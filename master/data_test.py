@@ -1,12 +1,14 @@
 import random
+from datetime import datetime
 
 class DataTest():
     base_url = "https://demowebshop.tricentis.com"
     firstname = "Tony"
     lastname = "Chopper"
-    data_random = str(random.randint(0, 1000))
-    email = "tonny.chopper"+data_random+"@mail.com"
-    email_invalid = "tony..chopper@@mailing.com"
+    add_to_cart = "Add to cart"
+    dt_string = datetime.now().strftime("%Y%m%d-%H%M%S")
+    email = "tonny.chopper."+dt_string+"@mail.com"
+    email_static = "tonny.chopper414@gmail.com"
     password = "tony123"
     wrong_password = "TonY123"
     empty_field = ""
@@ -17,3 +19,6 @@ class DataTest():
     success_message = "Your registration completed"
     welcome = "Welcome to our store"
     error_login = "Login was unsuccessful. Please correct the errors and try again"
+    laptop = "14.1-inch Laptop"
+    shopping = "Shopping cart"
+    shipping = "Estimate shipping"

@@ -21,7 +21,7 @@ class TestLogin(unittest.TestCase):
     def test_success_login_checkout_cart(self):
         driver = self.browser
         driver.get(str(DataTest.base_url+"/login"))
-        driver.find_element(By.XPATH, LocatorPath.username_login).send_keys("tonny.chopper.20230309-182156@mail.com")
+        driver.find_element(By.XPATH, LocatorPath.username_login).send_keys(DataTest.email)
         driver.find_element(By.XPATH, LocatorPath.password_login).send_keys(DataTest.password)
         driver.find_element(By.XPATH, LocatorPath.login_button).click()
 
