@@ -22,6 +22,6 @@ class LocatorPath():
     laptop_14inch = "//body/div[4]/div[1]/div[4]/div[3]/div[1]/div[1]/div[3]/div[3]/div[1]/div[2]/h2[1]/a[1]"
     add_laptop_to_cart = "#add-to-cart-button-31"
     shopping_cart = "//span[contains(text(),'Shopping cart')]"
-    cart_qty = "div.master-wrapper-page:nth-child(4) div.master-wrapper-content div.header:nth-child(2) div.header-links-wrapper div.header-links ul:nth-child(1) li:nth-child(3) a.ico-cart > span.cart-qty"
+    cart_qty = "/html[1]/body[1]/div[4]/div[1]/div[1]/div[2]/div[1]/ul[1]/li[3]/a[1]/span[2]"
     shipping_button = "//body/div[4]/div[1]/div[4]/div[1]/div[1]/div[2]/div[1]/form[1]/div[2]/div[1]/div[2]/div[1]/div[3]/div[4]/input[1]"
     # error_conf_password = "//body/div[4]/div[1]/div[4]/div[2]/form[1]/div[1]/div[2]/div[3]/div[2]/div[2]/span[2]/span[1]"
