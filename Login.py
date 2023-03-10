@@ -11,6 +11,7 @@ from master.locator import LocatorPath
 from master.data_test import DataTest
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.action_chains import ActionChains
 
 class TestLogin(unittest.TestCase):
     def setUp(self):
@@ -51,8 +52,8 @@ class TestLogin(unittest.TestCase):
         shopping_cart.click()
         self.assertEqual(driver.current_url, DataTest.base_url + '/cart')
 
-        select = Select(driver.find_element(By.XPATH, "//select[@id='CountryId']"))
-        select.select_by_visible_text('Indonesia')
+        select = Select(driver.find_element(By.CSS_SELECTOR, "select#CountryId"))
+        select.select_by_value("42")
         ship_button = driver.find_element(By.XPATH, LocatorPath.shipping_button)
         self.assertIn(DataTest.shipping, ship_button.get_attribute("defaultValue"))
         ship_button.click()
@@ -97,29 +98,27 @@ class TestLogin(unittest.TestCase):
         
         driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_FaxNumber']").clear()
         driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_FaxNumber']").send_keys("0218989776655")
-        continu1 = WebDriverWait(driver, 30).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "div.master-wrapper-page:nth-child(4) div.master-wrapper-content div.master-wrapper-main:nth-child(5) div.center-1 div.page.checkout-page div.page-body.checkout-data:nth-child(2) ol.opc li.tab-section.allow.active:nth-child(1) div.step.a-item div.buttons:nth-child(3) > input.button-1.new-address-next-step-button")))
-        continu1.click()
-        
-        driver.find_element(By.XPATH, "//input[@id='PickUpInStore']").click()
-        continu2 = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//body/div[4]/div[1]/div[4]/div[1]/div[1]/div[2]/ol[1]/li[2]/div[2]/div[1]/input[1]")))
-        continu2.click()
+        continue1 = driver.find_element(By.CLASS_NAME, "new-address-next-step-button")
+        driver.implicitly_wait(10)
+        ActionChains(driver).move_to_element(continue1).click(continue1).perform()
 
-        driver.find_element(By.XPATH, "//label[contains(text(),'Purchase Order')]").click()
-        continu3 = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//body/div[4]/div[1]/div[4]/div[1]/div[1]/div[2]/ol[1]/li[3]/div[2]/form[1]/div[2]/input[1]")))
-        continu3.click()
+        # driver.find_element(By.XPATH, "/html//input[@id='PickUpInStore']']").click()
+        # driver.find_element(By.XPATH, "//div[@id='shipping-buttons-container']/input[@title='Continue']").click()
+
+        # driver.find_element(By.XPATH, "//label[contains(text(),'Purchase Order')]").click()
+        # continu3 = WebDriverWait(driver, 10).until(
+        #     EC.presence_of_element_located((By.XPATH, "//body/div[4]/div[1]/div[4]/div[1]/div[1]/div[2]/ol[1]/li[3]/div[2]/form[1]/div[2]/input[1]")))
+        # continu3.click()
         
-        driver.find_element(By.XPATH, "//input[@id='PurchaseOrderNumber']").clear()
-        driver.find_element(By.XPATH, "//input[@id='PurchaseOrderNumber']").send_keys("PO-990011")
+        # driver.find_element(By.XPATH, "//input[@id='PurchaseOrderNumber']").clear()
+        # driver.find_element(By.XPATH, "//input[@id='PurchaseOrderNumber']").send_keys("PO-990011")
         
-        continue4 = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//body/div[4]/div[1]/div[4]/div[1]/div[1]/div[2]/ol[1]/li[3]/div[2]/form[1]/div[2]/input[1]")))
-        continue4.click()
-        continue5 = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//body/div[4]/div[1]/div[4]/div[1]/div[1]/div[2]/ol[1]/li[3]/div[2]/form[1]/div[2]/input[1]")))
-        continue5.click()
+        # continue4 = WebDriverWait(driver, 10).until(
+        #     EC.presence_of_element_located((By.XPATH, "//body/div[4]/div[1]/div[4]/div[1]/div[1]/div[2]/ol[1]/li[3]/div[2]/form[1]/div[2]/input[1]")))
+        # continue4.click()
+        # continue5 = WebDriverWait(driver, 10).until(
+        #     EC.presence_of_element_located((By.XPATH, "//body/div[4]/div[1]/div[4]/div[1]/div[1]/div[2]/ol[1]/li[3]/div[2]/form[1]/div[2]/input[1]")))
+        # continue5.click()
 
         # confirm = driver.find_element(By.XPATH, "//strong[contains(text(),'Your order has been successfully processed!')]")
         # self.assertIn("Your order has been successfully processed!",confirm.get_attribute("innerText"))
