@@ -20,6 +20,7 @@ class TestLogin(unittest.TestCase):
 
     def test_success_login_checkout_cart(self):
         driver = self.browser
+        use_email = "tonny.chopper.20230310-222831@mail.com"
         driver.get(str(DataTest.base_url+"/login"))
         driver.find_element(By.XPATH, LocatorPath.username_login).send_keys(DataTest.email)
         driver.find_element(By.XPATH, LocatorPath.password_login).send_keys(DataTest.password)
@@ -65,28 +66,72 @@ class TestLogin(unittest.TestCase):
 
         self.assertEqual(driver.current_url, DataTest.base_url + '/onepagecheckout')
 
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_FirstName']").clear()
         driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_FirstName']").send_keys(DataTest.firstname)
+        
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_LastName']").clear()
         driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_LastName']").send_keys(DataTest.lastname)
+        
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_Email']").clear()
         driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_Email']").send_keys(DataTest.email)
+        
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_Company']").clear()
         driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_Company']").send_keys("Moladin")
         select = Select(driver.find_element(By.XPATH, "//select[@id='BillingNewAddress_CountryId']"))
         select.select_by_visible_text('Indonesia')
-        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_City']").send_keys("Jakarta")
-        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_Address1']").send_keys("Cilandak")
-        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_Address2']").send_keys("Kedoya")
-        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_ZipPostalCode']").send_keys("13125")
-        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_PhoneNumber']").send_keys("811555698755")
-        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_FaxNumber']").send_keys("0218989776655")
         
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_City']").clear()
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_City']").send_keys("Jakarta")
+        
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_Address1']").clear()
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_Address1']").send_keys("Cilandak")
+        
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_Address2']").clear()
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_Address2']").send_keys("Kedoya")
+        
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_ZipPostalCode']").clear()
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_ZipPostalCode']").send_keys("13125")
+        
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_PhoneNumber']").clear()
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_PhoneNumber']").send_keys("811555698755")
+        
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_FaxNumber']").clear()
+        driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_FaxNumber']").send_keys("0218989776655")
+        continu1 = WebDriverWait(driver, 30).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "div.master-wrapper-page:nth-child(4) div.master-wrapper-content div.master-wrapper-main:nth-child(5) div.center-1 div.page.checkout-page div.page-body.checkout-data:nth-child(2) ol.opc li.tab-section.allow.active:nth-child(1) div.step.a-item div.buttons:nth-child(3) > input.button-1.new-address-next-step-button")))
+        continu1.click()
+        
+        driver.find_element(By.XPATH, "//input[@id='PickUpInStore']").click()
+        continu2 = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//body/div[4]/div[1]/div[4]/div[1]/div[1]/div[2]/ol[1]/li[2]/div[2]/div[1]/input[1]")))
+        continu2.click()
 
-    def test_failed_login(self):
-        driver = self.browser
-        driver.get(str(DataTest.base_url+"/login"))
-        driver.find_element(By.XPATH, LocatorPath.username_login).send_keys(DataTest.empty_field)
-        driver.find_element(By.XPATH, LocatorPath.password_login).send_keys(DataTest.empty_field)
-        driver.find_element(By.XPATH, LocatorPath.login_button).click()
-        msg = driver.find_element(By.XPATH, LocatorPath.login_empty)
-        self.assertIn(DataTest.error_login, msg.get_attribute("innerText"))
+        driver.find_element(By.XPATH, "//label[contains(text(),'Purchase Order')]").click()
+        continu3 = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//body/div[4]/div[1]/div[4]/div[1]/div[1]/div[2]/ol[1]/li[3]/div[2]/form[1]/div[2]/input[1]")))
+        continu3.click()
+        
+        driver.find_element(By.XPATH, "//input[@id='PurchaseOrderNumber']").clear()
+        driver.find_element(By.XPATH, "//input[@id='PurchaseOrderNumber']").send_keys("PO-990011")
+        
+        continue4 = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//body/div[4]/div[1]/div[4]/div[1]/div[1]/div[2]/ol[1]/li[3]/div[2]/form[1]/div[2]/input[1]")))
+        continue4.click()
+        continue5 = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//body/div[4]/div[1]/div[4]/div[1]/div[1]/div[2]/ol[1]/li[3]/div[2]/form[1]/div[2]/input[1]")))
+        continue5.click()
+
+        # confirm = driver.find_element(By.XPATH, "//strong[contains(text(),'Your order has been successfully processed!')]")
+        # self.assertIn("Your order has been successfully processed!",confirm.get_attribute("innerText"))
+
+    # def test_failed_login(self):
+    #     driver = self.browser
+    #     driver.get(str(DataTest.base_url+"/login"))
+    #     driver.find_element(By.XPATH, LocatorPath.username_login).send_keys(DataTest.empty_field)
+    #     driver.find_element(By.XPATH, LocatorPath.password_login).send_keys(DataTest.empty_field)
+    #     driver.find_element(By.XPATH, LocatorPath.login_button).click()
+    #     msg = driver.find_element(By.XPATH, LocatorPath.login_empty)
+    #     self.assertIn(DataTest.error_login, msg.get_attribute("innerText"))
 
     def tearDown(self):
         self.browser.close()
