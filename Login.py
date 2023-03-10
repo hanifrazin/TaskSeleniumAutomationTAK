@@ -52,6 +52,7 @@ class TestLogin(unittest.TestCase):
         shopping_cart.click()
         self.assertEqual(driver.current_url, DataTest.base_url + '/cart')
 
+        driver.implicitly_wait(10)
         select = Select(driver.find_element(By.CSS_SELECTOR, "select#CountryId"))
         select.select_by_value("42")
         ship_button = driver.find_element(By.XPATH, LocatorPath.shipping_button)
@@ -99,11 +100,16 @@ class TestLogin(unittest.TestCase):
         driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_FaxNumber']").clear()
         driver.find_element(By.XPATH, "//input[@id='BillingNewAddress_FaxNumber']").send_keys("0218989776655")
         continue1 = driver.find_element(By.CLASS_NAME, "new-address-next-step-button")
-        driver.implicitly_wait(10)
+        driver.implicitly_wait(5)
         ActionChains(driver).move_to_element(continue1).click(continue1).perform()
+        # continue1.click()
 
-        # driver.find_element(By.XPATH, "/html//input[@id='PickUpInStore']']").click()
-        # driver.find_element(By.XPATH, "//div[@id='shipping-buttons-container']/input[@title='Continue']").click()
+        # driver.implicitly_wait(10)
+        # driver.find_element(By.XPATH, "/html//input[@id='PickUpInStore']").click()
+        # continue2 = driver.find_element(By.CSS_SELECTOR, "div#shipping-buttons-container > input[title='Continue']")
+        # driver.implicitly_wait(5)
+        # ActionChains(driver).move_to_element(continue2).click(continue2).perform()
+        # continue2.click()
 
         # driver.find_element(By.XPATH, "//label[contains(text(),'Purchase Order')]").click()
         # continu3 = WebDriverWait(driver, 10).until(
@@ -123,14 +129,14 @@ class TestLogin(unittest.TestCase):
         # confirm = driver.find_element(By.XPATH, "//strong[contains(text(),'Your order has been successfully processed!')]")
         # self.assertIn("Your order has been successfully processed!",confirm.get_attribute("innerText"))
 
-    # def test_failed_login(self):
-    #     driver = self.browser
-    #     driver.get(str(DataTest.base_url+"/login"))
-    #     driver.find_element(By.XPATH, LocatorPath.username_login).send_keys(DataTest.empty_field)
-    #     driver.find_element(By.XPATH, LocatorPath.password_login).send_keys(DataTest.empty_field)
-    #     driver.find_element(By.XPATH, LocatorPath.login_button).click()
-    #     msg = driver.find_element(By.XPATH, LocatorPath.login_empty)
-    #     self.assertIn(DataTest.error_login, msg.get_attribute("innerText"))
+    def test_failed_login(self):
+        driver = self.browser
+        driver.get(str(DataTest.base_url+"/login"))
+        driver.find_element(By.XPATH, LocatorPath.username_login).send_keys(DataTest.empty_field)
+        driver.find_element(By.XPATH, LocatorPath.password_login).send_keys(DataTest.empty_field)
+        driver.find_element(By.XPATH, LocatorPath.login_button).click()
+        msg = driver.find_element(By.XPATH, LocatorPath.login_empty)
+        self.assertIn(DataTest.error_login, msg.get_attribute("innerText"))
 
     def tearDown(self):
         self.browser.close()
